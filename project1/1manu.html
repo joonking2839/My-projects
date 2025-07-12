@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="web.css">
+</head>
+<body class="gradient-background">
+    <header class="shadow-dance-container">
+        <h1 class="shadow-dance-text">GAME</h1>
+    </header>
+    
+    <main id="main-page" class="main-page">
+        <section>
+            <div class="modal" id="rule-modal">
+                <div class="modal-content">
+                    <h2>게임 룰</h2>
+                    <p>
+                        제한 시간안에 마우스를 <br>
+                        위아래로 흔들어<br />
+                        몸이 커지게 만들어주세요.<br />
+                    </p>
+                    <button class="close-button" id="close-modal">BACK</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-box">
+            <button id="button" class="button">START</button>
+            <button id="open" class="button">RULE</button>
+        </section>
+
+    </main>
+
+    <script>
+        const $button = document.getElementById('button')
+        $button.addEventListener('click',()=>{
+            window.location.href='2game.html';
+        })
+
+        const $ruleButton = document.getElementById('open');
+        const $modal = document.getElementById('rule-modal');
+        const $close = document.getElementById('close-modal');
+        
+        $ruleButton.addEventListener('click', () => {
+            $modal.style.display = 'block';
+        });
+
+        $close.addEventListener('click', () => {
+            $modal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

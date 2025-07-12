@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muscle Game</title>
+  <link rel="stylesheet" href="web2.css">
+</head>
+<body>
+
+  <main>
+    <div class="timer">
+    <div class="mask"></div>
+  </div>
+  
+  <figure>
+    <div id="svg-container"></div>
+  </figure>
+  </main>
+
+  <script>
+    let lastY = null;
+    let bodyScale = 1.0;
+    let muscleLossTimer = null;
+
+    fetch('character-default.svg')
+      .then(response => response.text())
+      .then(svg => {
+        document.getElementById('svg-container').innerHTML = svg;
+
+        const workout = [
+          'left-arm', 'right-arm', 'barbell-handle',
+          'left-hand', 'left-finger1', 'left-finger2', 'left-finger3', 'left-finger4', 'left-finger5', 'left-band',
+          'right-hand', 'right-finger1', 'right-finger2', 'right-finger3', 'right-finger4', 'right-finger5', 'right-band',
+          'right-barbell1', 'right-barbell2', 'left-barbell1', 'left-barbell2'  //넘힘들다
+        ];
+
+        const bodyGroupId = 'BODY'; // 그룹 ID는 SVG 내부에서 설정되어 있어야 함
+
+        // 기본 transition 설정
+        workout.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.transition = 'transform 0.2s ease';
+        });
+
+        //작아지는거 부드럽게
+        const bodyGroup = document.getElementById('BODY');
+        if (bodyGroup) {
+          bodyGroup.style.transition = 'transform 0.2s ease'; 
+          }
+
+        // 마우스 움직임 감지
+        document.addEventListener('mousemove', (e) => {
+          if (lastY === null) {
+            lastY = e.clientY;
+            return;
+          }
+
+          const deltaY = lastY - e.clientY;
+
+          if (deltaY > 30) {
+            raiseBarbell();
+          } else if (deltaY < -30) {
+            lowerBarbell();
+            growBody();
+          }
+
+          lastY = e.clientY;
+        });
+
+        // 바벨 올리기
+        function raiseBarbell() {
+          workout.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.transform = 'translateY(-100px)';
+          });
+        }
+
+        // 바벨 내리기
+        function lowerBarbell() {
+          workout.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.transform = 'translateY(150px)';
+          });
+        }
+
+        // 몸 커지기
+        function growBody() {
+          const maxScale = 8;
+          if (bodyScale >= maxScale) {
+            window.location.href = "4sucess.html";
+            return;
+          }
+          
+
+          bodyScale += 0.012;
+          updateBodyTransform();
+          resetMuscleLossTimer(); // 운동했으니 타이머 리셋
+        }
+
+        // 몸 작아지기
+        function resetMuscleLossTimer() {
+          clearInterval(muscleLossTimer);
+          muscleLossTimer = setInterval(() => {
+            if (bodyScale > 1.0) {
+              bodyScale -= 0.08;
+              updateBodyTransform();
+            } else {
+              clearInterval(muscleLossTimer); // 원본보다 작아졌으면 멈춤
+            }
+          }, 400); // 0.4초마다 줄어듦
+        }
+
+        // scale 적용 함수
+        function updateBodyTransform() {
+          const cx = 600;
+          const cy = 725;
+          const offsetX = (1 - bodyScale) * cx;
+          const offsetY = (1 - bodyScale) * cy;//이해 전혀 안됨
+
+          const bodyGroup = document.getElementById(bodyGroupId);
+          if (bodyGroup) {
+            bodyGroup.setAttribute('transform', `translate(${offsetX}, ${offsetY}) scale(${bodyScale})`);
+          }
+        }
+      });
+      //30초 지나면 실패 페이지로
+      setTimeout(() => {
+        window.location.href = "3fail.html";
+      }, 30000);
+  </script>
+</body>
+</html>
