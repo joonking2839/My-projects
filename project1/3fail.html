@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="web3.css">
+</head>
+<body class="gradient-background">
+    <header class="shadow-dance-container"><h1 class="shadow-dance-text">GAME OVER</h1></header>
+    <main id="main-page" class="main-page">
+        
+        <figure>
+            <img src="urbanbrush-20190322021553947310.png" alt="게임 실패 때문에 좌절하는 캐릭터" style="width: 150px; height: 150px;">
+        </figure>
+          
+
+
+        <section class="main-box">
+            <button id="button" class="button">RESTART</button>
+            <button id="lobby" class="button">ROBBY</button>
+        </section>
+    </main>
+
+    <script>
+        const $button = document.getElementById('button')
+        $button.addEventListener('click',()=>{
+            window.location.href='2game.html';
+        })
+
+        const $lobby = document.getElementById('lobby')
+        $lobby.addEventListener('click',()=>{
+            window.location.href='1manu.html';
+        })
+    </script>
+</body>
+</html>
