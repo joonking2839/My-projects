@@ -21,7 +21,7 @@ body {
     width: 250px;
     /* Height and width */
     animation-name: time;
-    animation-duration: 30s;
+
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
@@ -36,15 +36,9 @@ body {
     animation-name: mask;
     animation-duration: 30s;
     animation-timing-function: linear;
-    animation-iteration-count: infinite;
     /* Animation time and number of steps (halved) */
     -webkit-transform-origin: 100% 50%;
 }
-    @-webkit-keyframes time {
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-    }
     @-webkit-keyframes mask {
     0% {
         background:#1a202c;
